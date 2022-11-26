@@ -1,35 +1,38 @@
 class Solution {
 public:
-    vector<int>dp;
-
-    int fun(vector<vector<int>>& nums, int idx, int eidx){
-        
-        if(idx==nums.size())
-            return 0;
-        
-        if(nums[idx][0] < eidx)
-            return fun(nums, idx+1, eidx);
-
-        if(dp[idx]!=-1)
-            return dp[idx];
-           
-        int not_take=fun(nums, idx+1, eidx);
-        int take=nums[idx][2] + fun(nums, idx+1, nums[idx][1]);
-      
-        int ans=max(take, not_take);
-        return dp[idx]=ans;
-    }
+    // linear search 
     
     int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit) {
-        vector<vector<int>>events(startTime.size(),vector<int>(3,0));
-        for(int i=0;i<startTime.size();i++)
-        {
-            events[i][0]=startTime[i];
-            events[i][1]=endTime[i];
-            events[i][2]=profit[i];
+        
+        int n=startTime.size();
+        vector<vector<int>>values(n, vector<int>(3));
+        
+        for(int i=0;i<n;i++){
+            values[i][0]=endTime[i];
+            values[i][1]=startTime[i];
+            values[i][2]=profit[i];
         }
-        sort(events.begin() , events.end());
-        dp.resize(profit.size(),-1);
-        return fun(events, 0, 0);
+        
+        sort(values.begin(), values.end());
+        vector<int>dp(n, 0);
+        int ans=values[0][2];
+        dp[0]=ans;
+        
+        for(int i=1;i<n;i++){
+            
+            dp[i]=values[i][2];
+            dp[i]=max(dp[i], dp[i-1]);
+            int temp=-1;
+            for(int j=i-1;j>=0;j--){
+                if(values[j][0] <= values[i][1]){    // endTime of j <= startTime of i
+                    dp[i]=max(dp[i], values[i][2]+dp[j]);
+                    break;
+                }
+            }
+            
+            ans=max(ans, dp[i]);
+        }
+        
+        return ans;
     }
 };
