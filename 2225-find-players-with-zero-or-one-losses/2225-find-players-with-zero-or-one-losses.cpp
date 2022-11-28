@@ -11,29 +11,22 @@ public:
             loser[y]++;
         }
         
-        vector<vector<int>>ans;
+        vector<vector<int>>ans(2);
         vector<int>res, res1;
        
         for(auto e:loser){
-            
             if(winner.count(e.first)){
                 winner[e.first]=0;
             }
+            if(e.second==1)
+                    ans[1].push_back(e.first);
         }
         
         for(auto e:winner){
             if(e.second==1)
-                res.push_back(e.first);
+                ans[0].push_back(e.first);
         }
-        
-        for(auto e:loser){
-            if(e.second==1)
-                res1.push_back(e.first);
-        }
-        
-        ans.push_back(res);
-        ans.push_back(res1);
-        
+ 
         return ans;
     }
 };
