@@ -7,13 +7,11 @@ public:
     int countUnguarded(int m, int n, vector<vector<int>>& guards, vector<vector<int>>& walls) {
         
         vector<vector<char>>grid(m, vector<char>(n, '.'));
-        queue<pair<int, int>>q;
         int occupied=guards.size()+walls.size();
                                  
         for(int i=0;i<guards.size();i++){
             int x=guards[i][0];
             int y=guards[i][1];
-            q.push({x, y});
             grid[x][y]='g';
         }   
                                  
