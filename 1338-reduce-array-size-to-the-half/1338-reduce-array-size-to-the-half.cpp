@@ -4,25 +4,22 @@ public:
     int minSetSize(vector<int>& arr) {
         
         int ans=0;
-        int mx=*max_element(arr.begin(), arr.end());
-        
-        vector<int>mp(mx+1, 0);
+        unordered_map<int, int>mp;
         
         for(int i=0;i<arr.size();i++)
             mp[arr[i]]++;
         
-        sort(mp.begin(), mp.end());
+        priority_queue<int>pq;
+        for(auto e:mp) pq.push(e.second);
+        
         int sum=0;
         int sz=arr.size()/2;
         
-        for(int i=mp.size()-1;i>=0;i--){
-            if(mp[i]>=1){
-                ans++;
-                sum+=mp[i];   
-            }
-            if(sum >= sz)
-                break;
-        }      
+        while(sum<sz){
+            sum+=pq.top();
+            pq.pop();
+            ans++;
+        }
 
         return ans;
     }
