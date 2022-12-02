@@ -1,38 +1,21 @@
 class Solution {
 public:
-    bool closeStrings(string word1, string word2) {
-        
+    bool closeStrings(string word1, string word2) {       
         int ans=1;
-        if(word1.size()!=word2.size())
-            return 0;
+        vector<int>mp(26, 0), mp1(26, 0), cnt(26, 0), cnt1(26, 0);
         
-        unordered_map<char, int>mp, mp1;
-        unordered_map<int, int>cnt, cnt1;
-        
-        for(int i=0;i<word1.size();i++)
-            mp[word1[i]]++;
-        
-        for(int i=0;i<word2.size();i++)
-            mp1[word2[i]]++;
-        
-        for(auto e:mp){
-            if(mp1.find(e.first)==mp1.end())
-                return 0;
+        for(int i=0;i<word1.size();i++){
+            mp[word1[i]-'a']++;
+            cnt[word1[i]-'a']=1;     // i.e it is present
         }
         
-        for(auto e:mp){
-            cnt[e.second]++;
+        for(int i=0;i<word2.size();i++){
+            mp1[word2[i]-'a']++;
+            cnt1[word2[i]-'a']=1;
         }
+        sort(mp.begin(), mp.end());
+        sort(mp1.begin(), mp1.end());
         
-        for(auto e:mp1){
-            cnt1[e.second]++;
-        }
-        
-        for(auto e:cnt){
-            if(e.second!=cnt1[e.first])
-                return 0;
-        }
-        
-        return cnt.size()==cnt1.size() && ans;
+        return mp==mp1 && cnt==cnt1;
     }
 };
