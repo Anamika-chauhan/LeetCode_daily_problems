@@ -11,13 +11,17 @@ public:
         vector<int>ans;
         priority_queue<pair<int, int>>v;
         
-        for(auto e:mp)
-            v.push(make_pair(e.second, e.first));
-        
-        while(k--){
+        for(auto e:mp){
+            v.push(make_pair(-1*e.second, e.first));
+            if(v.size()>k){
+                v.pop();
+            }
+        }
+            
+        while(!v.empty()){
             ans.push_back(v.top().second);
             v.pop();
-        } 
+        }
         
         return ans;
     }
