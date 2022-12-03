@@ -13,10 +13,7 @@ public:
         
         vector<vector<int>>ans;
         while(!pq.empty()){
-            vector<int>res;
-            res.push_back(pq.top().second.first);
-            res.push_back(pq.top().second.second);
-            ans.push_back(res);
+            ans.push_back({pq.top().second.first, pq.top().second.second});
             pq.pop();
         }
                     
