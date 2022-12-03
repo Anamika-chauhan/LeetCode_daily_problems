@@ -6,7 +6,7 @@ public:
         for(int i=0;i<points.size();i++){
             double x=abs(sqrt(points[i][0]*points[i][0] + points[i][1]*points[i][1]));
           
-            pq.push(make_pair(x, make_pair(points[i][0], points[i][1])));
+            pq.push({x, {points[i][0], points[i][1]}});
             if(pq.size() > k)
                 pq.pop();
         }
