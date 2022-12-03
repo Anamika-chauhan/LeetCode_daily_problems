@@ -9,19 +9,15 @@ public:
         }
         
         vector<int>ans;
-        vector<pair<int, int>>v;
+        priority_queue<pair<int, int>>v;
         
         for(auto e:mp)
-            v.push_back(make_pair(e.second, e.first));
+            v.push(make_pair(e.second, e.first));
         
-        sort(v.rbegin(), v.rend());
-        
-        for(auto e:v){
-            if(k==0)
-                break;
-            ans.push_back(e.second);
-            k--;
-        }    
+        while(k--){
+            ans.push_back(v.top().second);
+            v.pop();
+        } 
         
         return ans;
     }
